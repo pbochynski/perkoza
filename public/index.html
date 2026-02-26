@@ -370,7 +370,10 @@
 
         /* Panorama position debug info - zmień na 'block' aby włączyć */
         .panorama-position {
-            display: none;
+            display: none;  /* zmień na 'block' aby włączyć */
+            font-size: 0.75rem;
+            color: #666;
+            margin: 5px 0;
         }
     </style>
 </head>
@@ -712,7 +715,7 @@
                     <div class="panorama-label">
                         ${pano.label}
                         <br>
-                        <code class="panorama-position" style="font-size: 0.75rem; color: #666; display: block; margin: 5px 0;">pitch: 0, yaw: 0, hfov: 100</code>
+                        <code class="panorama-position">pitch: 0, yaw: 0, hfov: 100</code>
                         <button class="panorama-fullscreen-btn" onclick="openFullscreenPanorama('${pano.src}', '${pano.label}', ${pano.pitch || 0}, ${pano.yaw || 0}, ${pano.hfov || 100})">
                             🔍 Pełny ekran
                         </button>
