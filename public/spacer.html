@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wirtualny spacer 360° | Mieszkanie ul. Perkoza | perkoza.cloud</title>
+    <meta name="description" content="Wirtualny spacer 360° po mieszkaniu na sprzedaż - 43 m², ul. Perkoza w Gliwicach. Zobacz panoramy salonu, sypialni, kuchni i łazienki.">
+    
+    <!-- Pannellum CSS for 360 panorama -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #667eea;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #667eea;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .instructions {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* 360 Panorama Styles */
+        .panorama-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 600px) {
+            .panorama-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panorama-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .panorama-viewer {
+            width: 100%;
+            height: 400px;
+        }
+
+        .panorama-label {
+            padding: 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #2d3748;
+            background: white;
+        }
+
+        /* Fullscreen Panorama Button */
+        .panorama-fullscreen-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .panorama-fullscreen-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .fullscreen-panorama {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1001;
+            background: black;
+        }
+
+        .fullscreen-panorama.active {
+            display: block;
+        }
+
+        .fullscreen-panorama .panorama-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        .fullscreen-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1002;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .fullscreen-close:hover {
+            transform: scale(1.05);
+        }
+
+        /* Back to main link */
+        .back-link {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .back-link a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .back-link a:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-link p {
+            margin-top: 15px;
+            color: #666;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+        }
+
+        /* Panorama placeholder */
+        .panorama-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .panorama-placeholder:hover {
+            background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
+        }
+
+        /* Panorama position debug info - zmień na 'block' aby włączyć */
+        .panorama-position {
+            display: none;  /* zmień na 'block' aby włączyć */
+            font-size: 0.75rem;
+            color: #666;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔄 Wirtualny spacer 360°</h1>
+            <p class="subtitle">Mieszkanie na sprzedaż – ul. Perkoza, Gliwice | 43 m² | 309 000 zł</p>
+            <p class="instructions">Kliknij i przeciągnij, aby rozejrzeć się po mieszkaniu. Użyj kółka myszy do przybliżania.</p>
+        </header>
+
+        <div class="panorama-grid" id="panorama-container">
+            <!-- Panoramas will be loaded dynamically -->
+        </div>
+
+        <div class="back-link">
+            <a href="index.html">🏠 Zobacz pełne ogłoszenie</a>
+            <p>Zdjęcia, szczegółowy opis, lokalizacja i kontakt</p>
+        </div>
+
+        <footer>
+            <p>© 2026 perkoza.cloud | Mieszkanie na sprzedaż</p>
+        </footer>
+    </div>
+
+    <!-- Fullscreen Panorama -->
+    <div class="fullscreen-panorama" id="fullscreen-panorama">
+        <button class="fullscreen-close" onclick="closeFullscreenPanorama()">✕ Zamknij</button>
+        <div id="fullscreen-viewer" class="panorama-viewer"></div>
+    </div>
+
+    <!-- Pannellum JS for 360 panorama -->
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+    <script>
+        // Panorama list with labels and initial view settings
+        // pitch = góra/dół (-90 do 90), yaw = lewo/prawo (-180 do 180), hfov = pole widzenia
+        const panoramas = [
+            { src: 'images360/IMG_1912.JPG', label: 'Salon', pitch: -14.9, yaw: -70.6, hfov: 120 },
+            { src: 'images360/IMG_1913.JPG', label: 'Sypialnia', pitch: -6.5, yaw: 142.8, hfov: 120 },
+            { src: 'images360/IMG_1914.JPG', label: 'Kuchnia', pitch: -4.0, yaw: -156.7, hfov: 120 },
+            { src: 'images360/IMG_1915.JPG', label: 'Łazienka i korytarz', pitch: -8.3, yaw: 20.7, hfov: 76}
+        ];
+
+        let panoramaViewers = {};
+        let fullscreenViewer = null;
+        let panoramaObserver = null;
+
+        // Load panoramas with lazy loading using Intersection Observer
+        function loadPanoramas() {
+            const container = document.getElementById('panorama-container');
+            
+            // Create Intersection Observer for lazy loading panoramas
+            panoramaObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = parseInt(entry.target.dataset.index);
+                        const pano = panoramas[index];
+                        
+                        // Check if already loaded
+                        if (panoramaViewers[index]) return;
+                        
+                        // Remove placeholder and initialize viewer
+                        const viewerDiv = entry.target.querySelector('.panorama-viewer');
+                        if (viewerDiv && viewerDiv.classList.contains('panorama-placeholder')) {
+                            viewerDiv.classList.remove('panorama-placeholder');
+                            viewerDiv.innerHTML = '';
+                        }
+                        
+                        // Initialize Pannellum viewer with custom initial view
+                        const viewer = pannellum.viewer(`panorama-${index}`, {
+                            type: 'equirectangular',
+                            panorama: pano.src,
+                            autoLoad: true,
+                            compass: false,
+                            showZoomCtrl: true,
+                            showFullscreenCtrl: false,
+                            mouseZoom: true,
+                            pitch: pano.pitch || 0,
+                            yaw: pano.yaw || 0,
+                            hfov: pano.hfov || 100,
+                            minHfov: 50,
+                            maxHfov: 120
+                        });
+                        panoramaViewers[index] = viewer;
+                        
+                        // Update position display when view changes
+                        const positionDisplay = entry.target.querySelector('.panorama-position');
+                        if (positionDisplay) {
+                            const updatePosition = () => {
+                                const pitch = viewer.getPitch().toFixed(1);
+                                const yaw = viewer.getYaw().toFixed(1);
+                                const hfov = viewer.getHfov().toFixed(0);
+                                positionDisplay.textContent = `pitch: ${pitch}, yaw: ${yaw}, hfov: ${hfov}`;
+                            };
+                            viewer.on('mouseup', updatePosition);
+                            viewer.on('touchend', updatePosition);
+                            viewer.on('zoomchange', updatePosition);
+                            updatePosition();
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '100px',
+                threshold: 0.1
+            });
+            
+            panoramas.forEach((pano, index) => {
+                const item = document.createElement('div');
+                item.className = 'panorama-item';
+                item.dataset.index = index;
+                item.innerHTML = `
+                    <div id="panorama-${index}" class="panorama-viewer panorama-placeholder">
+                        🔄 Kliknij lub przewiń, aby załadować panoramę
+                    </div>
+                    <div class="panorama-label">
+                        ${pano.label}
+                        <br>
+                        <code class="panorama-position">pitch: 0, yaw: 0, hfov: 100</code>
+                        <button class="panorama-fullscreen-btn" onclick="openFullscreenPanorama('${pano.src}', '${pano.label}', ${pano.pitch || 0}, ${pano.yaw || 0}, ${pano.hfov || 100})">
+                            🔍 Pełny ekran
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+                
+                // Observe for lazy loading
+                panoramaObserver.observe(item);
+            });
+        }
+
+        // Fullscreen panorama
+        function openFullscreenPanorama(src, label, pitch = 0, yaw = 0, hfov = 100) {
+            document.getElementById('fullscreen-panorama').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            if (fullscreenViewer) {
+                fullscreenViewer.destroy();
+            }
+            
+            fullscreenViewer = pannellum.viewer('fullscreen-viewer', {
+                type: 'equirectangular',
+                panorama: src,
+                autoLoad: true,
+                compass: true,
+                showZoomCtrl: true,
+                showFullscreenCtrl: false,
+                mouseZoom: true,
+                pitch: pitch,
+                yaw: yaw,
+                hfov: hfov,
+                minHfov: 30,
+                maxHfov: 120,
+                title: label
+            });
+        }
+
+        function closeFullscreenPanorama() {
+            document.getElementById('fullscreen-panorama').classList.remove('active');
+            document.body.style.overflow = '';
+            if (fullscreenViewer) {
+                fullscreenViewer.destroy();
+                fullscreenViewer = null;
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('fullscreen-panorama').classList.contains('active')) {
+                if (e.key === 'Escape') closeFullscreenPanorama();
+            }
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPanoramas();
+        });
+    </script>
+</body>
+</html>
