@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mieszkanie na sprzedaż - 41,2 m² | ul. Perkoza | perkoza.cloud</title>
+    <meta name="description" content="Mieszkanie na sprzedaż - 41,2 m², 2 pokoje, kuchnia, łazienka, balkon. Spokojna okolica, niski czynsz 570 zł, blisko szkoła, przedszkole, sklepy. Blok ocieplony.">
+    
+    <!-- Pannellum CSS for 360 panorama -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            background: #667eea;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-size: 2rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .feature {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            line-height: 1.8;
+        }
+
+        section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        /* Gallery Styles */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            aspect-ratio: 4/3;
+            overflow: hidden;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+        }
+
+        .gallery-item img.loading {
+            opacity: 0;
+        }
+
+        .gallery-item img.loaded {
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Panorama placeholder */
+        .panorama-placeholder {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .panorama-placeholder:hover {
+            background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
+        }
+
+        /* Lightbox Styles */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 85vh;
+            border-radius: 10px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 20px;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-prev {
+            left: -80px;
+        }
+
+        .lightbox-next {
+            right: -80px;
+        }
+
+        .lightbox-counter {
+            color: white;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* 360 Panorama Styles */
+        .panorama-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .panorama-item {
+            background: #f7fafc;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .panorama-viewer {
+            width: 100%;
+            height: 300px;
+        }
+
+        .panorama-label {
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+            color: #2d3748;
+            background: white;
+        }
+
+        /* Fullscreen Panorama */
+        .panorama-fullscreen-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            transition: transform 0.3s ease;
+        }
+
+        .panorama-fullscreen-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .fullscreen-panorama {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1001;
+            background: black;
+        }
+
+        .fullscreen-panorama.active {
+            display: block;
+        }
+
+        .fullscreen-panorama .panorama-viewer {
+            width: 100%;
+            height: 100%;
+        }
+
+        .fullscreen-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1002;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .contact-item h3 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .contact-item a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .price {
+                font-size: 1.5rem;
+            }
+
+            .lightbox-nav {
+                font-size: 2rem;
+                padding: 10px;
+            }
+
+            .lightbox-prev {
+                left: 10px;
+            }
+
+            .lightbox-next {
+                right: 10px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏠 Mieszkanie na sprzedaż – ul. Perkoza</h1>
+            <p class="price">💰 Skontaktuj się po cenę</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📐</div>
+                    <div>41,2 m²</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🛋️</div>
+                    <div>2 pokoje</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🏢</div>
+                    <div>4 piętro / 4</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💵</div>
+                    <div>Czynsz 570 zł</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌳</div>
+                    <div>Widok na zieleń</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🌿</div>
+                    <div>Balkon</div>
+                </div>
+            </div>
+
+            <div class="description">
+                <h3 style="color: #667eea; margin-bottom: 15px;">✨ Twoje nowe mieszkanie w spokojnej okolicy!</h3>
+                <p>
+                    Oferuję do sprzedaży <strong>przytulne mieszkanie o powierzchni 41,2 m²</strong> przy ul. Perkoza. 
+                    Mieszkanie położone jest na <strong>4. piętrze w 4-piętrowym, ocieplonym bloku</strong>, 
+                    co gwarantuje <strong>niskie koszty ogrzewania</strong>. Okna wychodzą na <strong>teren zielony 
+                    z trawnikiem i drzewami</strong> – idealne dla osób ceniących spokój i kontakt z naturą.
+                </p>
+                
+                <h4 style="color: #2d3748; margin: 20px 0 10px 0;">🏠 Co oferuje mieszkanie:</h4>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li><strong>2 pokoje</strong> z parkietami (wymagają wycyklinowania, ale są kompletne)</li>
+                    <li><strong>Kuchnia</strong> – wykafelkowana, z dużą lodówką</li>
+                    <li><strong>Łazienka</strong> – wykafelkowana, z kabiną prysznicową i pralką</li>
+                    <li><strong>Przedpokój</strong> z praktyczną szafą do zabudowy</li>
+                    <li><strong>Balkon</strong> – świeżo wyremontowany</li>
+                    <li><strong>Piwnica</strong> – dodatkowa przestrzeń do przechowywania</li>
+                    <li><strong>Piecyk gazowy</strong> – po przeglądzie, gotowy do użytku</li>
+                </ul>
+
+                <h4 style="color: #2d3748; margin: 20px 0 10px 0;">💰 Niskie koszty utrzymania:</h4>
+                <p>
+                    <strong>Czynsz wraz z ogrzewaniem to tylko 570 zł miesięcznie!</strong> 
+                    Blok jest ocieplony, a klatka schodowa ciepła – to realne oszczędności przez cały rok.
+                </p>
+
+                <h4 style="color: #2d3748; margin: 20px 0 10px 0;">📍 Doskonała lokalizacja – wszystko na wyciągnięcie ręki:</h4>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li>🏫 <strong>Szkoła</strong> – 30 m</li>
+                    <li>👶 <strong>Przedszkole</strong> – 50 m</li>
+                    <li>🛒 <strong>Żabka</strong> – 20 m</li>
+                    <li>📚 <strong>Biblioteka</strong> – 200 m</li>
+                    <li>💊 <strong>Apteka</strong> – 300 m</li>
+                    <li>🚌 <strong>Przystanek autobusowy</strong> – 300 m</li>
+                    <li>🛒 <strong>Biedronka</strong> – 400 m</li>
+                    <li>🏊 <strong>Basen</strong> – 500 m</li>
+                </ul>
+
+                <h4 style="color: #2d3748; margin: 20px 0 10px 0;">🔧 Stan mieszkania:</h4>
+                <p>
+                    Mieszkanie wymaga odświeżenia – to <strong>idealna okazja, by urządzić je według własnego gustu</strong>! 
+                    Świeżo wyremontowana klatka schodowa i balkon to dodatkowy atut.
+                </p>
+
+                <p style="margin-top: 20px; padding: 15px; background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%); border-radius: 10px; text-align: center;">
+                    <strong>🎯 Idealne dla rodzin z dziećmi, singli lub jako inwestycja pod wynajem!</strong><br>
+                    Zapraszam do obejrzenia zdjęć oraz wirtualnych panoram 360°.
+                </p>
+            </div>
+        </header>
+
+        <section>
+            <h2>📸 Galeria zdjęć</h2>
+            <div class="gallery-grid" id="gallery">
+                <!-- Images will be loaded dynamically -->
+            </div>
+        </section>
+
+        <section>
+            <h2>🔄 Panoramy 360°</h2>
+            <p style="margin-bottom: 20px; color: #666;">Kliknij i przeciągnij, aby rozejrzeć się po mieszkaniu. Użyj kółka myszy do przybliżania.</p>
+            <div class="panorama-container" id="panorama-container">
+                <!-- Panoramas will be loaded dynamically -->
+            </div>
+        </section>
+
+        <section>
+            <h2>📞 Kontakt</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <h3>📧 Email</h3>
+                    <a href="mailto:kontakt@perkoza.cloud">kontakt@perkoza.cloud</a>
+                </div>
+                <div class="contact-item">
+                    <h3>🌐 Strona</h3>
+                    <a href="https://perkoza.cloud">perkoza.cloud</a>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2026 perkoza.cloud | Mieszkanie na sprzedaż</p>
+        </footer>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <div class="lightbox-content">
+            <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+            <button class="lightbox-nav lightbox-prev" onclick="changeImage(-1)">❮</button>
+            <img id="lightbox-img" src="" alt="Zdjęcie mieszkania">
+            <button class="lightbox-nav lightbox-next" onclick="changeImage(1)">❯</button>
+            <div class="lightbox-counter" id="lightbox-counter"></div>
+        </div>
+    </div>
+
+    <!-- Fullscreen Panorama -->
+    <div class="fullscreen-panorama" id="fullscreen-panorama">
+        <button class="fullscreen-close" onclick="closeFullscreenPanorama()">✕ Zamknij</button>
+        <div id="fullscreen-viewer" class="panorama-viewer"></div>
+    </div>
+
+    <!-- Pannellum JS for 360 panorama -->
+    <script src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+
+    <script>
+        // Image filenames
+        const imageFiles = [
+            'IMG_1868.JPG',
+            'IMG_1869.JPG',
+            'IMG_1870.JPG',
+            'IMG_1871.JPG',
+            'IMG_1872.JPG',
+            'IMG_1873.JPG',
+            'IMG_1874.JPG',
+            'IMG_1875.JPG',
+            'IMG_1876.JPG',
+            'IMG_1877.JPG',
+            'IMG_1878.JPG',
+            'IMG_1879.JPG',
+            'IMG_1880.JPG',
+            'IMG_1881.JPG',
+            'IMG_1882.JPG',
+            'IMG_1883.JPG',
+            'IMG_1884.JPG',
+            'IMG_1885.JPG',
+            'IMG_1886.JPG',
+            'IMG_1887.JPG',
+            'IMG_1888.JPG',
+            'IMG_1889.JPG',
+            'IMG_1890.JPG',
+            'IMG_1891.JPG',
+            'IMG_1892.JPG',
+            'IMG_1893.JPG',
+            'IMG_1894.JPG',
+            'IMG_1895.JPG',
+            'IMG_1896.JPG',
+            'IMG_1897.JPG',
+            'IMG_1898.JPG',
+            'IMG_1899.JPG',
+            'IMG_1900.JPG',
+            'IMG_1901.JPG',
+            'IMG_1902.JPG',
+            'IMG_1903.JPG',
+            'IMG_1904.JPG',
+            'IMG_1905.JPG',
+            'IMG_1906.JPG',
+            'IMG_1907.JPG',
+            'IMG_1908.JPG',
+            'IMG_1909.JPG',
+            'IMG_1910.JPG'
+        ];
+
+        // Full size images and thumbnails
+        const images = imageFiles.map(f => `images/${f}`);
+        const thumbnails = imageFiles.map(f => `thumbnails/${f}`);
+
+        // Panorama list with labels and initial view settings
+        // pitch = góra/dół (-90 do 90), yaw = lewo/prawo (-180 do 180), hfov = pole widzenia
+        const panoramas = [
+            { src: 'images360/IMG_1912.JPG', label: 'Salon', pitch: -14.9, yaw: -70.6, hfov: 120 },
+            { src: 'images360/IMG_1913.JPG', label: 'Sypialnia', pitch: -6.5, yaw: 142.8, hfov: 120 },
+            { src: 'images360/IMG_1914.JPG', label: 'Kuchnia', pitch: -4.0, yaw: -156.7, hfov: 120 },
+            { src: 'images360/IMG_1915.JPG', label: 'Łazienka i korytarz', pitch: -8.3, yaw: 20.7, hfov: 76}
+        ];
+
+        let currentImageIndex = 0;
+        let panoramaViewers = {};
+        let fullscreenViewer = null;
+        let panoramaObserver = null;
+
+        // Load gallery with thumbnails for fast loading
+        function loadGallery() {
+            const gallery = document.getElementById('gallery');
+            thumbnails.forEach((thumb, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item';
+                const imgEl = document.createElement('img');
+                imgEl.alt = `Zdjęcie mieszkania ${index + 1}`;
+                imgEl.loading = 'lazy';
+                imgEl.className = 'loading';
+                imgEl.onload = () => {
+                    imgEl.classList.remove('loading');
+                    imgEl.classList.add('loaded');
+                };
+                imgEl.src = thumb;
+                item.appendChild(imgEl);
+                item.onclick = () => openLightbox(index);
+                gallery.appendChild(item);
+            });
+        }
+
+        // Lightbox functions
+        function openLightbox(index) {
+            currentImageIndex = index;
+            updateLightboxImage();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        function updateLightboxImage() {
+            document.getElementById('lightbox-img').src = images[currentImageIndex];
+            document.getElementById('lightbox-counter').textContent = 
+                `${currentImageIndex + 1} / ${images.length}`;
+        }
+
+        function changeImage(direction) {
+            currentImageIndex += direction;
+            if (currentImageIndex < 0) currentImageIndex = images.length - 1;
+            if (currentImageIndex >= images.length) currentImageIndex = 0;
+            updateLightboxImage();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (document.getElementById('lightbox').classList.contains('active')) {
+                if (e.key === 'Escape') closeLightbox();
+                if (e.key === 'ArrowLeft') changeImage(-1);
+                if (e.key === 'ArrowRight') changeImage(1);
+            }
+            if (document.getElementById('fullscreen-panorama').classList.contains('active')) {
+                if (e.key === 'Escape') closeFullscreenPanorama();
+            }
+        });
+
+        // Click outside to close lightbox
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') closeLightbox();
+        });
+
+        // Load panoramas with lazy loading using Intersection Observer
+        function loadPanoramas() {
+            const container = document.getElementById('panorama-container');
+            
+            // Create Intersection Observer for lazy loading panoramas
+            panoramaObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const index = parseInt(entry.target.dataset.index);
+                        const pano = panoramas[index];
+                        
+                        // Check if already loaded
+                        if (panoramaViewers[index]) return;
+                        
+                        // Remove placeholder and initialize viewer
+                        const viewerDiv = entry.target.querySelector('.panorama-viewer');
+                        if (viewerDiv && viewerDiv.classList.contains('panorama-placeholder')) {
+                            viewerDiv.classList.remove('panorama-placeholder');
+                            viewerDiv.innerHTML = '';
+                        }
+                        
+                        // Initialize Pannellum viewer with custom initial view
+                        const viewer = pannellum.viewer(`panorama-${index}`, {
+                            type: 'equirectangular',
+                            panorama: pano.src,
+                            autoLoad: true,
+                            compass: false,
+                            showZoomCtrl: false,
+                            showFullscreenCtrl: false,
+                            mouseZoom: true,
+                            pitch: pano.pitch || 0,
+                            yaw: pano.yaw || 0,
+                            hfov: pano.hfov || 100,
+                            minHfov: 50,
+                            maxHfov: 120
+                        });
+                        panoramaViewers[index] = viewer;
+                        
+                        // Update position display when view changes
+                        const positionDisplay = entry.target.querySelector('.panorama-position');
+                        if (positionDisplay) {
+                            const updatePosition = () => {
+                                const pitch = viewer.getPitch().toFixed(1);
+                                const yaw = viewer.getYaw().toFixed(1);
+                                const hfov = viewer.getHfov().toFixed(0);
+                                positionDisplay.textContent = `pitch: ${pitch}, yaw: ${yaw}, hfov: ${hfov}`;
+                            };
+                            viewer.on('mouseup', updatePosition);
+                            viewer.on('touchend', updatePosition);
+                            viewer.on('zoomchange', updatePosition);
+                            updatePosition();
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '100px',
+                threshold: 0.1
+            });
+            
+            panoramas.forEach((pano, index) => {
+                const item = document.createElement('div');
+                item.className = 'panorama-item';
+                item.dataset.index = index;
+                item.innerHTML = `
+                    <div id="panorama-${index}" class="panorama-viewer panorama-placeholder">
+                        🔄 Kliknij lub przewiń, aby załadować panoramę
+                    </div>
+                    <div class="panorama-label">
+                        ${pano.label}
+                        <br>
+                        <code class="panorama-position" style="font-size: 0.75rem; color: #666; display: block; margin: 5px 0;">pitch: 0, yaw: 0, hfov: 100</code>
+                        <button class="panorama-fullscreen-btn" onclick="openFullscreenPanorama('${pano.src}', '${pano.label}', ${pano.pitch || 0}, ${pano.yaw || 0}, ${pano.hfov || 100})">
+                            🔍 Pełny ekran
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+                
+                // Observe for lazy loading
+                panoramaObserver.observe(item);
+            });
+        }
+
+        // Fullscreen panorama
+        function openFullscreenPanorama(src, label, pitch = 0, yaw = 0, hfov = 100) {
+            document.getElementById('fullscreen-panorama').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            if (fullscreenViewer) {
+                fullscreenViewer.destroy();
+            }
+            
+            fullscreenViewer = pannellum.viewer('fullscreen-viewer', {
+                type: 'equirectangular',
+                panorama: src,
+                autoLoad: true,
+                compass: true,
+                showZoomCtrl: true,
+                showFullscreenCtrl: false,
+                mouseZoom: true,
+                pitch: pitch,
+                yaw: yaw,
+                hfov: hfov,
+                minHfov: 30,
+                maxHfov: 120,
+                title: label
+            });
+        }
+
+        function closeFullscreenPanorama() {
+            document.getElementById('fullscreen-panorama').classList.remove('active');
+            document.body.style.overflow = '';
+            if (fullscreenViewer) {
+                fullscreenViewer.destroy();
+                fullscreenViewer = null;
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadGallery();
+            loadPanoramas();
+        });
+    </script>
+</body>
+</html>
