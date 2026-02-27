@@ -215,10 +215,84 @@
             color: #666;
             margin: 5px 0;
         }
+
+        /* Iframe banner */
+        .iframe-banner {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+            box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .iframe-banner a {
+            color: white;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .iframe-banner a:hover {
+            text-decoration: none;
+        }
+
+        .copy-link-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .copy-link-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .copy-success {
+            display: none;
+            color: #fff;
+            font-weight: bold;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .copy-success.show {
+            display: inline;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .iframe-banner {
+                font-size: 0.95rem;
+                padding: 12px 15px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
+        <!-- Top banner for iframe embedding -->
+        <div class="iframe-banner">
+            <span>📍 Pełne ogłoszenie pod adresem: </span>
+            <a href="https://perkoza.cloud" target="_blank" rel="noopener">perkoza.cloud</a>
+            <button class="copy-link-btn" onclick="copyLink()">📋 Kopiuj link</button>
+            <span class="copy-success" id="copy-success">✓ Skopiowano!</span>
+        </div>
+
         <header>
             <h1>🔄 Wirtualny spacer 360°</h1>
             <p class="subtitle">Mieszkanie na sprzedaż – ul. Perkoza, Gliwice | 43 m² | 309 000 zł</p>
@@ -386,6 +460,31 @@
                 if (e.key === 'Escape') closeFullscreenPanorama();
             }
         });
+
+        // Copy link function
+        function copyLink() {
+            const url = 'https://perkoza.cloud';
+            navigator.clipboard.writeText(url).then(() => {
+                const successEl = document.getElementById('copy-success');
+                successEl.classList.add('show');
+                setTimeout(() => {
+                    successEl.classList.remove('show');
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                const successEl = document.getElementById('copy-success');
+                successEl.classList.add('show');
+                setTimeout(() => {
+                    successEl.classList.remove('show');
+                }, 2000);
+            });
+        }
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
