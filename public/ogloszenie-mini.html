@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ogłoszenie - Mieszkanie na sprzedaż (4x mini)</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 5mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            width: 210mm;
+            height: 297mm;
+            padding: 5mm;
+            background: white;
+            color: #000;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1mm;
+        }
+
+        .card {
+            border: 2px solid #000;
+            padding: 4px 8px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Row 1: Title */
+        .title-row {
+            text-align: center;
+        }
+
+        .title-row h1 {
+            font-size: 28px;
+            color: #000;
+        }
+
+        /* Row 2: Address */
+        .address-row {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            border-bottom: 1px solid #000;
+            padding-bottom: 20px;
+        }
+
+        /* Row 3: Main content - QR + Info */
+        .main-row {
+            display: flex;
+            flex: 1;
+            align-items: center;
+        }
+
+        /* QR Column - 1/4 width */
+        .qr-column {
+            width: 25%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-column img {
+            width: 150px;
+            height: 150px;
+        }
+
+        /* Info Column - 3/4 width */
+        .info-column {
+            width: 75%;
+            padding-left: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .price-line {
+            font-size: 29px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .price-per-m {
+            font-size: 12px;
+            font-weight: normal;
+        }
+
+        .features-line {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            background: #f5f5f5;
+            padding: 2px 8px;
+            border: 1px solid #000;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .contact-line {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .website {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- Card 1 -->
+        <div class="card">
+            <div class="title-row">
+                <h1>MIESZKANIE NA SPRZEDAŻ</h1>
+            </div>
+            <div class="address-row">
+                ul. Perkoza, Gliwice
+            </div>
+            <div class="main-row">
+                <div class="qr-column">
+                    <img src="qrcode.png" alt="QR">
+                </div>
+                <div class="info-column">
+                    <div class="price-line">299 000 zł <span class="price-per-m">(6 953 zł/m²)</span></div>
+                    <div class="features-line">
+                        <span class="feature">43 m²</span>
+                        <span class="feature">2 pokoje</span>
+                        <span class="feature">4 piętro</span>
+                        <span class="feature">Czynsz 570 zł</span>
+                        <span class="feature">Balkon</span>
+                    </div>
+                    <div class="contact-line">tel. 668 720 573</div>
+                    <div class="website">https://perkoza.cloud</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+            <div class="title-row">
+                <h1>MIESZKANIE NA SPRZEDAŻ</h1>
+            </div>
+            <div class="address-row">
+                ul. Perkoza, Gliwice
+            </div>
+            <div class="main-row">
+                <div class="qr-column">
+                    <img src="qrcode.png" alt="QR">
+                </div>
+                <div class="info-column">
+                    <div class="price-line">299 000 zł <span class="price-per-m">(6 953 zł/m²)</span></div>
+                    <div class="features-line">
+                        <span class="feature">43 m²</span>
+                        <span class="feature">2 pokoje</span>
+                        <span class="feature">4 piętro</span>
+                        <span class="feature">Czynsz 570 zł</span>
+                        <span class="feature">Balkon</span>
+                    </div>
+                    <div class="contact-line">tel. 668 720 573</div>
+                    <div class="website">https://perkoza.cloud</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="card">
+            <div class="title-row">
+                <h1>MIESZKANIE NA SPRZEDAŻ</h1>
+            </div>
+            <div class="address-row">
+                ul. Perkoza, Gliwice
+            </div>
+            <div class="main-row">
+                <div class="qr-column">
+                    <img src="qrcode.png" alt="QR">
+                </div>
+                <div class="info-column">
+                    <div class="price-line">299 000 zł <span class="price-per-m">(6 953 zł/m²)</span></div>
+                    <div class="features-line">
+                        <span class="feature">43 m²</span>
+                        <span class="feature">2 pokoje</span>
+                        <span class="feature">4 piętro</span>
+                        <span class="feature">Czynsz 570 zł</span>
+                        <span class="feature">Balkon</span>
+                    </div>
+                    <div class="contact-line">tel. 668 720 573</div>
+                    <div class="website">https://perkoza.cloud</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="card">
+            <div class="title-row">
+                <h1>MIESZKANIE NA SPRZEDAŻ</h1>
+            </div>
+            <div class="address-row">
+                ul. Perkoza, Gliwice
+            </div>
+            <div class="main-row">
+                <div class="qr-column">
+                    <img src="qrcode.png" alt="QR">
+                </div>
+                <div class="info-column">
+                    <div class="price-line">299 000 zł <span class="price-per-m">(6 953 zł/m²)</span></div>
+                    <div class="features-line">
+                        <span class="feature">43 m²</span>
+                        <span class="feature">2 pokoje</span>
+                        <span class="feature">4 piętro</span>
+                        <span class="feature">Czynsz 570 zł</span>
+                        <span class="feature">Balkon</span>
+                    </div>
+                    <div class="contact-line">tel. 668 720 573</div>
+                    <div class="website">https://perkoza.cloud</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
